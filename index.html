@@ -378,6 +378,72 @@
             display: none;
         }
 
+         /* ===================================
+           RESEARCH AFFILIATE SECTION
+        =================================== */
+        .researchaffiliate {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .researchaffiliate::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10%;
+            width: clamp(300px, 40vw, 550px);
+            height: clamp(300px, 40vw, 550px);
+            background-image: url('583028561_836072439171115_2027528368502886329_n.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.08;
+            z-index: -1;
+            pointer-events: none;
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        .researchaffiliate-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(18px, 3vh, 30px) clamp(50px, 7vw, 100px);
+            margin-top: clamp(35px, 5vh, 55px);
+            text-align: center;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .researchaffiliate-member {
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            transition: none;
+            border: none;
+        }
+
+        .researchaffiliate-member:hover {
+            background: transparent;
+            border-color: transparent;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .researchaffiliate-member h3 {
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: 400;
+            margin-bottom: 0;
+            color: #5C4A3E;
+            line-height: 1.4;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .researchaffiliate-member p {
+            display: none;
+        }
+
         /* ===================================
            FOOTER
         =================================== */
@@ -563,7 +629,7 @@
             <div class="section-title">The Team</div>
             <div class="team-grid">
                 <div class="team-member">
-                    <h3>Stefania Milan</h3>
+                    <h3>Mattéo Bard</h3>
                     <p>Add later<br>Add later</p>
                 </div>
                 <div class="team-member">
@@ -571,27 +637,40 @@
                     <p>Add later<br>Add later</p>
                 </div>
                 <div class="team-member">
+                    <h3>Federico Bonelli</h3>
+                    <p>Add later<br>Add later</p>
+                </div>
+                <div class="team-member">
                     <h3>Giulia Campaioli</h3>
+                    <p>Add later<br>Add later</p>
+                </div>
+                <div class="team-member">
+                    <h3>Meg Kitamura</h3>
+                    <p>Add later<br>Add later</p>
+                </div>
+                <div class="team-member">
+                    <h3>Stefania Milan (PI)</h3>
                     <p>Add later<br>Add later</p>
                 </div>
                 <div class="team-member">
                     <h3>Carina Nasser</h3>
                     <p>Add later<br>Add later</p>
-                </div>
+               </div>
                 <div class="team-member">
                     <h3>Sruthi Vanguri</h3>
                     <p>Add later<br>Add later</p>
                 </div>
-                <div class="team-member">
-                    <h3>Mattéo Bard</h3>
-                    <p>Add later<br>Add later</p>
-                </div>
-                <div class="team-member">
-                    <h3>Federico Bonelli</h3>
-                    <p>Add later<br>Add later</p>
-               </div>
-                <div class="team-member">
-                    <h3>Meg Kitamura</h3>
+            </div>
+        </div>
+    </section>
+
+     <!-- Research Affiliate Section -->
+    <section class="researchaffiliate">
+        <div class="container">
+            <div class="section-title">Research Affiliate</div>
+            <div class="researchaffiliate-grid">
+                <div class="researchaffiliate-member">
+                    <h3>Tiago Alexandre Ferraz Vieira</h3>
                     <p>Add later<br>Add later</p>
                 </div>
             </div>
