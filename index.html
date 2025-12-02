@@ -128,9 +128,32 @@
             bottom: clamp(40px, 6vh, 80px);
             right: clamp(40px, 5vw, 80px);
             display: flex;
-            align-items: center;
-            gap: clamp(15px, 2vw, 25px);
+            flex-direction: column;   /* stack vertically */
+            align-items: flex-start;  /* left-align everything */
+            gap: clamp(12px, 1.5vw, 18px);
             z-index: 10;
+        }
+        
+        .funding-text {
+            max-width: 500px;
+            font-size: clamp(11px, 1vw, 13px);
+            line-height: 1.45;
+            color: #5C4A3E;
+            font-family: 'Oswald', sans-serif;
+            text-align: left;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-logos {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+        
+            .funding-text {
+                max-width: 100%;
+            }
         }
 
         .logo {
@@ -778,21 +801,28 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <!-- Logos in bottom-right corner of footer -->
-            <div class="footer-logos">
-                <img src="LOGO_ERC-FLAG_EU-no text.png" alt="ERC European Research Council Logo" class="logo-erc">
-                <img src="logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+<footer>
+    <div class="container">
+        <div class="footer-logos">
+            
+            <!-- UvA logo FIRST -->
+            <img src="logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+
+            <!-- ERC logo SECOND -->
+            <img src="LOGO_ERC-FLAG_EU-no text.png" alt="ERC European Research Council Logo" class="logo-erc">
+
+            <!-- Funding text LEFT-ALIGNED -->
             <div class="funding-text">
                 Funded by the European Union. Views and opinions expressed are however those of the 
                 author(s) only and do not necessarily reflect those of the European Union or the 
                 European Research Council Executive Agency. Neither the European Union nor the 
                 granting authority can be held responsible for them. This work is supported by 
                 ERC grant DATAGOV, Grant No. 101142006.
-                </div>
             </div>
+
         </div>
-    </footer>
+    </div>
+</footer>
+
 </body>
 </html>
