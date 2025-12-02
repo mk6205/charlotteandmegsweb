@@ -127,23 +127,30 @@
             position: absolute;
             bottom: clamp(40px, 6vh, 80px);
             right: clamp(40px, 5vw, 80px);
+        
             display: flex;
-            flex-direction: column;   /* stack vertically */
-            align-items: flex-start;  /* left-align everything */
-            gap: clamp(12px, 1.5vw, 18px);
+            flex-direction: row;
+            align-items: flex-start;
+            gap: clamp(15px, 2vw, 25px);
+        
+            white-space: normal;         /* allow text line breaks */
+            flex-wrap: nowrap;           /* ⬅️ prevent stacking */
+            max-width: 60vw;             /* ⬅️ give it horizontal space */
             z-index: 10;
         }
         
         .funding-text {
+            flex: 1;                     /* ⬅️ Forces the text to take available space */
+            min-width: 250px;            /* ⬅️ Prevents collapse */
             max-width: 500px;
+            text-align: left;
             font-size: clamp(11px, 1vw, 13px);
             line-height: 1.45;
             color: #5C4A3E;
             font-family: 'Oswald', sans-serif;
-            text-align: left;
             opacity: 0.9;
         }
-        
+
         @media (max-width: 768px) {
             .footer-logos {
                 flex-direction: column;
@@ -155,6 +162,7 @@
                 max-width: 100%;
             }
         }
+    
 
         .logo {
             width: clamp(150px, 18vw, 250px);
