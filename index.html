@@ -580,20 +580,17 @@
             }
         }
 /* ===================================
-   MAILING LIST LINK (MAIN PAGE)
+   TOP BANNER LINK
 =================================== */
-.subscribe-link {
-    display: inline-block;
-    margin-bottom: clamp(30px, 4vh, 45px);
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(18px, 2vw, 22px);
-    color: #5A4635;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(92, 74, 62, 0.4);
+.top-banner a.banner-link {
+    color: white;
+    text-decoration: underline;
+    margin-left: 8px;
+    font-weight: 400;
 }
 
-.subscribe-link:hover {
-    opacity: 0.8;
+.top-banner a.banner-link:hover {
+    opacity: 0.85;
 }
 
         /* ===================================
@@ -765,9 +762,12 @@
 </head>
 <body>
     <!-- Top Banner -->
-    <div class="top-banner">
-        This website is under construction. More content coming soon!
-    </div>
+<div class="top-banner">
+    This website is under construction.
+    <a href="subscribe.html" class="banner-link">
+        Stay in touch through our mailing list here
+    </a>
+</div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -882,9 +882,6 @@
     <section class="blog">
         <div class="container">
             <div class="section-title">Blog</div>
-            <a href="subscribe.html" class="subscribe-link">
-                Stay in touch →
-            </a>
             <div class="blog-list">
                 <!-- Blog item 1 -->
                 <div class="blog-item">
