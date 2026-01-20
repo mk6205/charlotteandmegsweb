@@ -579,6 +579,22 @@
                 gap: 15px;
             }
         }
+/* ===================================
+   MAILING LIST LINK (MAIN PAGE)
+=================================== */
+.subscribe-link {
+    display: inline-block;
+    margin-bottom: clamp(30px, 4vh, 45px);
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(18px, 2vw, 22px);
+    color: #5A4635;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(92, 74, 62, 0.4);
+}
+
+.subscribe-link:hover {
+    opacity: 0.8;
+}
 
         /* ===================================
            FOOTER
@@ -866,6 +882,9 @@
     <section class="blog">
         <div class="container">
             <div class="section-title">Blog</div>
+            <a href="subscribe.html" class="subscribe-link">
+                Stay in touch →
+            </a>
             <div class="blog-list">
                 <!-- Blog item 1 -->
                 <div class="blog-item">
