@@ -29,9 +29,12 @@
     justify-content: space-between;
 }
 
-.nav-logo img {
-    height: 45px;
-    width: auto;
+.nav-logo {
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    font-weight: 400;
 }
 
 .main-nav {
@@ -500,21 +503,14 @@
 
         .researchaffiliate-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: clamp(18px, 3vh, 30px) clamp(50px, 7vw, 100px);
+            grid-template-columns: 1fr;
+            justify-items: center;
             margin-top: clamp(35px, 5vh, 55px);
-            text-align: center;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .researchaffiliate-member {
-            padding: 0;
-            background: transparent;
-            border-radius: 0;
-            transition: none;
-            border: none;
+        .researchaffiliate-member h3 {
+            white-space: normal;
+            max-width: 100%;
         }
 
         .researchaffiliate-member:hover {
@@ -740,11 +736,10 @@
      <!-- Header Section -->
     <header class="site-header">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <img src="datagov_logo_temp.png"
-     alt="Data Governance project logo"
-     class="site-logo">
-        </a>
+        <div class="nav-logo">
+    DATAGOV
+        </div>
+
 
         <nav class="main-nav">
             <a href="blog.html">Blog</a>
