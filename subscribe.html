@@ -1,134 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Stay in touch – DATAGOV</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Stay in touch – DATAGOV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        /* ===================================
-           BASE STYLES
-        =================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            background-color: #f1c232;
-            color: #5C4A3E;
-            font-family: 'Oswald', sans-serif;
-            font-size: 18px;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+/* ===================================
+   RESET & BASE
+=================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: clamp(80px, 12vh, 140px) 30px;
-            text-align: center;
-        }
+body {
+    background-color: #f1c232;
+    color: #5C4A3E;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
 
-        /* ===================================
-           TYPOGRAPHY
-        =================================== */
-        h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(48px, 6vw, 88px);
-            letter-spacing: 2px;
-            margin-bottom: clamp(30px, 4vh, 45px);
-        }
+/* ===================================
+   NAVIGATION (FROM INDEX.HTML)
+=================================== */
+.site-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #5A4635;
+    z-index: 1000;
+}
 
-        p {
-            font-size: clamp(17px, 1.8vw, 20px);
-            margin-bottom: clamp(35px, 5vh, 55px);
-            opacity: 0.9;
-        }
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px clamp(25px, 4vw, 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        /* ===================================
-           FORM
-        =================================== */
-        form {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+.nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: white;
+}
 
-        input[type="email"] {
-            width: 280px;
-            padding: 12px 14px;
-            font-size: 16px;
-            font-family: 'Oswald', sans-serif;
-            border: 1px solid rgba(92, 74, 62, 0.3);
-            background: transparent;
-            color: #5C4A3E;
-        }
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
 
-        input[type="submit"] {
-            padding: 12px 22px;
-            font-size: 16px;
-            font-family: 'Oswald', sans-serif;
-            background-color: #5A4635;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
 
-        input[type="submit"]:hover {
-            opacity: 0.9;
-        }
+.main-nav a:hover {
+    opacity: 0.8;
+}
 
-        /* ===================================
-           FOOT LINKS
-        =================================== */
-        .back-link {
-            display: inline-block;
-            margin-top: clamp(50px, 7vh, 80px);
-            font-size: 16px;
-            color: #5C4A3E;
-            text-decoration: none;
-            opacity: 0.8;
-        }
+/* ===================================
+   PAGE LAYOUT
+=================================== */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 160px 30px 140px; /* clears fixed nav + footer */
+    text-align: center;
+}
 
-        .back-link:hover {
-            opacity: 1;
-        }
-    </style>
+/* ===================================
+   TYPOGRAPHY
+=================================== */
+h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    letter-spacing: 2px;
+    margin-bottom: clamp(30px, 4vh, 45px);
+}
+
+p {
+    font-size: clamp(17px, 1.8vw, 20px);
+    margin-bottom: clamp(35px, 5vh, 55px);
+    opacity: 0.9;
+}
+
+/* ===================================
+   FORM
+=================================== */
+form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+input[type="email"] {
+    width: 280px;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-family: 'Oswald', sans-serif;
+    border: 1px solid rgba(92, 74, 62, 0.3);
+    background: transparent;
+    color: #5C4A3E;
+}
+
+input[type="submit"] {
+    padding: 12px 22px;
+    font-size: 16px;
+    font-family: 'Oswald', sans-serif;
+    background-color: #5A4635;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+/* ===================================
+   FOOTER (FROM INDEX.HTML)
+=================================== */
+footer {
+    position: relative;
+    padding: 120px clamp(25px, 4vw, 60px);
+    border-top: 1px solid rgba(92, 74, 62, 0.1);
+}
+
+.footer-logos {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 200px;
+}
+
+.logo-erc {
+    width: 140px;
+}
+
+.funding-text {
+    max-width: 400px;
+    font-size: 13px;
+    line-height: 1.45;
+    opacity: 0.9;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 768px) {
+    .footer-logos {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Stay in touch</h1>
-
-        <p>
-            Subscribe to receive occasional updates about DATAGOV’s research,
-            publications, and events. Emails are infrequent and you can
-            unsubscribe at any time.
-        </p>
-
-        <form action="https://lists.ghserv.net/mailman/subscribe/community" method="post">
-            <input
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                required
-            >
-            <input type="hidden" name="fullname" value="">
-            <input type="submit" value="Subscribe">
-        </form>
-
-        <a href="index.html" class="back-link">
-            ← Back to project
-        </a>
+<!-- Header -->
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">DATAGOV</div>
+        <nav class="main-nav">
+            <a href="blog.html">Blog</a>
+            <a href="events.html">Events</a>
+            <a href="contact.html">Contact</a>
+        </nav>
     </div>
+</header>
+
+<!-- Main content -->
+<main class="container">
+    <h1>Stay in touch</h1>
+
+    <p>
+        Subscribe to receive occasional updates about DATAGOV’s research,
+        publications, and events. Emails are infrequent and you can
+        unsubscribe at any time.
+    </p>
+
+    <form action="https://lists.ghserv.net/mailman/subscribe/community" method="post">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <input type="hidden" name="fullname" value="">
+        <input type="submit" value="Subscribe">
+    </form>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-logos">
+        <img src="logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
