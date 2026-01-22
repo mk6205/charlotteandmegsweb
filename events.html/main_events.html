@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Events – DATAGOV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===============================
+   RESET & BASE
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f1c232;
+    color: #5C4A3E;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* ===============================
+   NAVIGATION (SAME AS INDEX)
+================================ */
+.site-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #5A4635;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px clamp(25px, 4vw, 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-nav a:hover {
+    opacity: 0.8;
+}
+
+/* ===============================
+   PAGE LAYOUT
+================================ */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 160px 30px 120px;
+}
+
+/* ===============================
+   PAGE TITLE
+================================ */
+.page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 6vw, 90px);
+    letter-spacing: 2px;
+    margin-bottom: 70px;
+}
+
+/* ===============================
+   EVENTS LIST
+================================ */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+.event-item {
+    display: grid;
+    grid-template-columns: 140px 1fr 220px;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Date block */
+.event-date {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+
+/* Event content */
+.event-content h2 {
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.event-location {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 15px;
+}
+
+/* Read more */
+.event-link {
+    font-size: 16px;
+    color: #6b4a2b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.event-link:hover {
+    text-decoration: underline;
+}
+
+/* Event image */
+.event-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===============================
+   FOOTER (SAME AS INDEX)
+================================ */
+footer {
+    padding: 120px clamp(25px, 4vw, 60px);
+    border-top: 1px solid rgba(92, 74, 62, 0.1);
+}
+
+.footer-logos {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 200px;
+}
+
+.logo-erc {
+    width: 140px;
+}
+
+.funding-text {
+    max-width: 400px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+    .event-item {
+        grid-template-columns: 1fr;
+    }
+
+    .event-image {
+        max-width: 300px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">DATAGOV</div>
+        <nav class="main-nav">
+            <a href="blog.html">Blog</a>
+            <a href="events.html">Events</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <h1 class="page-title">Events</h1>
+
+    <section class="events-list">
+
+        <!-- Event 1 -->
+        <article class="event-item">
+            <div class="event-date">
+                12–14 June 2026
+            </div>
+
+            <div class="event-content">
+                <h2>Summer School on Data Infrastructures</h2>
+                <div class="event-location">
+                    Amsterdam, The Netherlands
+                </div>
+                <a href="events/summer-school-2026.html" class="event-link">
+                    Read more →
+                </a>
+            </div>
+
+            <div class="event-image">
+                <img src="images/summer-school.jpg" alt="Summer school event image">
+            </div>
+        </article>
+
+        <!-- Event 2 -->
+        <article class="event-item">
+            <div class="event-date">
+                26 - 27 March 2026
+            </div>
+
+            <div class="event-content">
+                <h2>DATAGOV Kickoff</h2>
+                <div class="event-location">
+                    Framer Framed, Amsterdam
+                </div>
+                <a href="events/datagov_kickoff_2026.html" class="event-link">
+                    Read more →
+                </a>
+            </div>
+
+            <div class="event-image">
+                <img src="images/datagov_kickoff_2026.jpg" alt="Workshop image">
+            </div>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-logos">
+        <img src="logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
