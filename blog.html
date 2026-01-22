@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Blog – DATAGOV</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog | Governance by Data Infrastructure</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,12 +26,11 @@ body {
     color: #5C4A3E;
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
-    line-height: 1.7;
-    overflow-x: hidden;
+    line-height: 1.6;
 }
 
 /* ===============================
-   NAVIGATION (same as main page)
+   NAVIGATION
 ================================ */
 .site-header {
     position: fixed;
@@ -50,11 +49,12 @@ body {
     align-items: center;
 }
 
-.nav-logo {
+.nav-logo a {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 32px;
     letter-spacing: 2px;
     color: white;
+    text-decoration: none;
 }
 
 .main-nav {
@@ -78,71 +78,93 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding-left: clamp(25px, 4vw, 60px);
-    padding-right: clamp(25px, 4vw, 60px);
+    padding: 160px clamp(25px, 4vw, 60px) 120px;
 }
 
-/* ===============================
-   BLOG PAGE
-================================ */
-.blog-page {
-    padding-top: 140px; /* clears fixed nav */
-}
-
-.blog-header {
-    text-align: center;
+.section-title {
+    background-color: #5A4635;
+    color: white;
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: clamp(26px, 3vw, 40px);
     margin-bottom: 60px;
 }
 
-.blog-header h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 7vw, 96px);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+/* ===============================
+   BLOG SECTION
+================================ */
+.blog {
+    text-align: center;
+    position: relative;
 }
 
-.blog-intro {
-    max-width: 700px;
+.blog::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: clamp(300px, 40vw, 550px);
+    height: clamp(300px, 40vw, 550px);
+    background-image: url('583028561_836072439171115_2027528368502886329_n.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.08;
+    z-index: -1;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(-15deg);
+}
+
+.blog-content {
+    font-size: clamp(20px, 2.2vw, 28px);
+    line-height: 1.6;
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* ===============================
+   BLOG LIST STRUCTURE
+================================ */
+.blog-list {
+    max-width: 1000px;
     margin: 0 auto;
-    font-size: 18px;
+    text-align: left;
 }
 
-.blog-entry {
-    max-width: 800px;
-    margin: 0 auto 60px;
+.blog-item {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 40px;
+    padding: 25px 0;
+    border-top: 1px solid rgba(92, 74, 62, 0.2);
 }
 
-.blog-entry h2 {
-    font-size: 26px;
-    font-weight: 400;
-    margin-bottom: 6px;
+.blog-item:last-child {
+    border-bottom: 1px solid rgba(92, 74, 62, 0.2);
 }
 
-.blog-entry h2 a {
+.blog-meta {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+.blog-title a {
+    font-size: clamp(22px, 2.5vw, 30px);
     color: #5C4A3E;
     text-decoration: none;
 }
 
-.blog-entry h2 a:hover {
+.blog-title a:hover {
     text-decoration: underline;
 }
 
-.blog-meta {
-    font-size: 14px;
-    opacity: 0.7;
-    margin-bottom: 12px;
-}
-
-.blog-excerpt {
-    font-size: 18px;
-    line-height: 1.6;
-}
-
 /* ===============================
-   FOOTER (same as main page)
+   FOOTER
 ================================ */
 footer {
-    position: relative;
     padding: 120px clamp(25px, 4vw, 60px);
     border-top: 1px solid rgba(92, 74, 62, 0.1);
 }
@@ -150,8 +172,8 @@ footer {
 .footer-logos {
     display: flex;
     gap: 25px;
-    align-items: flex-start;
     justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 
@@ -167,14 +189,16 @@ footer {
     max-width: 400px;
     font-size: 13px;
     line-height: 1.45;
+    opacity: 0.9;
 }
 
 /* ===============================
    RESPONSIVE
 ================================ */
 @media (max-width: 768px) {
-    .blog-entry {
-        margin-bottom: 40px;
+    .blog-item {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .footer-logos {
@@ -191,7 +215,9 @@ footer {
 <!-- Header -->
 <header class="site-header">
     <div class="nav-container">
-        <div class="nav-logo">DATAGOV</div>
+        <div class="nav-logo">
+            <a href="index.html">DATAGOV</a>
+        </div>
         <nav class="main-nav">
             <a href="blog.html">Blog</a>
             <a href="events.html">Events</a>
@@ -200,51 +226,53 @@ footer {
     </div>
 </header>
 
-<!-- Blog Page -->
-<main class="blog-page">
+<!-- Blog Section -->
+<section class="blog">
+    <div class="container">
+        <div class="section-title">Blog</div>
 
-    <section class="blog-header">
-        <div class="container">
-            <h1>Blog</h1>
-            <p class="blog-intro">
-                Research notes, essays, and project updates from the DATAGOV collective.
-            </p>
+        <div class="blog-content">
+            Reflections, research notes, and project updates from the DATAGOV team.
         </div>
-    </section>
 
-    <section class="blog-list">
-        <div class="container">
+        <div class="blog-list">
 
-            <article class="blog-entry">
-                <h2>
-                    <a href="blog/example-post.html">
-                        Governing Through Data Infrastructure
-                    </a>
-                </h2>
-                <p class="blog-meta">March 2026 · Meg Kitamura</p>
-                <p class="blog-excerpt">
-                    How biometric and digital ID systems reshape governance,
-                    accountability, and everyday life.
-                </p>
-            </article>
+            <div class="blog-item">
+                <div class="blog-meta">
+                    <div>12 January 2026</div>
+                    <div>Author Name</div>
+                    <div>#hashtags</div>
+                </div>
+                <div class="blog-title">
+                    <a href="blog/post-1.html">Title of the blog post</a>
+                </div>
+            </div>
 
-            <article class="blog-entry">
-                <h2>
-                    <a href="blog/example-post-2.html">
-                        Mapping the Hyper-Sensorized Society
-                    </a>
-                </h2>
-                <p class="blog-meta">February 2026 · DATAGOV Team</p>
-                <p class="blog-excerpt">
-                    Reflections on infrastructure, mapping, and the politics of
-                    visibility in contemporary surveillance systems.
-                </p>
-            </article>
+            <div class="blog-item">
+                <div class="blog-meta">
+                    <div>03 February 2026</div>
+                    <div>Author Name</div>
+                    <div>#hashtags</div>
+                </div>
+                <div class="blog-title">
+                    <a href="blog/post-2.html">Title of the blog post</a>
+                </div>
+            </div>
+
+            <div class="blog-item">
+                <div class="blog-meta">
+                    <div>18 March 2026</div>
+                    <div>Author Name</div>
+                    <div>#hashtags</div>
+                </div>
+                <div class="blog-title">
+                    <a href="blog/post-3.html">Title of the blog post</a>
+                </div>
+            </div>
 
         </div>
-    </section>
-
-</main>
+    </div>
+</section>
 
 <!-- Footer -->
 <footer>
@@ -252,8 +280,9 @@ footer {
         <img src="logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
         <img src="LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
         <div class="funding-text">
-            Funded by the European Union. Views and opinions expressed are however those of the
-            author(s) only and do not necessarily reflect those of the European Union or the ERC.
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
         </div>
     </div>
 </footer>
