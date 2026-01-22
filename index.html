@@ -58,6 +58,13 @@ body {
     width: auto;
 }
 
+/* 🔒 LOGO CANNOT BE CLICKED */
+.nav-logo,
+.nav-logo img {
+    pointer-events: none;
+    cursor: default;
+}
+
 .main-nav {
     display: flex;
     gap: 30px;
@@ -181,6 +188,13 @@ h1 {
     justify-items: center;
 }
 
+/* ✅ FIX: clean single-line name */
+.researchaffiliate-member h3 {
+    font-size: 20px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
 /* ===============================
    FOOTER
 ================================ */
@@ -214,6 +228,12 @@ footer {
     .keywords {
         flex-direction: column;
         gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .researchaffiliate-member h3 {
+        white-space: normal;
     }
 }
     </style>
