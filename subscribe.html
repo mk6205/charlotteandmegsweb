@@ -130,6 +130,37 @@ input[type="submit"] {
 input[type="submit"]:hover {
     opacity: 0.9;
 }
+   /* ===================================
+   CONTENT SECTIONS (STAY IN TOUCH + CONTACT)
+=================================== */
+.content-section {
+    margin-bottom: clamp(80px, 12vh, 140px);
+}
+
+.content-section h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    letter-spacing: 2px;
+    margin-bottom: clamp(30px, 4vh, 45px);
+}
+
+.content-section p {
+    font-size: clamp(17px, 1.8vw, 20px);
+    line-height: 1.6;
+    margin-bottom: clamp(35px, 5vh, 55px);
+    opacity: 0.9;
+}
+
+/* Contact link styling */
+.contact-section a {
+    color: #6b4a2b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+}
 
 /* ===================================
    FOOTER (FROM INDEX.HTML)
@@ -191,7 +222,7 @@ footer {
 </header>
 
 <!-- Main content -->
-<main class="container">
+<section class="content-section">
     <h1>Stay in touch</h1>
 
     <p>
@@ -205,8 +236,9 @@ footer {
         <input type="hidden" name="fullname" value="">
         <input type="submit" value="Subscribe">
     </form>
+   </section>
    
-   <section class="contact-section">
+   <section class="contact-section contact-section">
     <h1>Contact</h1>
     <p>
         For inquiries, please contact us at<br>
