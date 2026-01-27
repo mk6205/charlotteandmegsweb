@@ -11,6 +11,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+/* Temporary: hide blog content */
+.section-title,
+.blog-content,
+.blog-list {
+    display: none;
+}
+
+/* Coming soon message */
+.coming-soon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 160px;
+    color: #5A4635;
+}
 
 /* ===============================
    RESET & BASE
@@ -229,6 +245,8 @@ footer {
 <!-- Blog Section -->
 <section class="blog">
     <div class="container">
+       <div class="coming-soon">DATAGOV blog coming soon</div>
+
         <div class="section-title">Blog</div>
 
         <div class="blog-content">
