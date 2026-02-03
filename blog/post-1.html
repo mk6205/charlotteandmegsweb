@@ -2,19 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title of the blog post | DATAGOV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <title>Dissecting Digital ID(ea)s | DATAGOV</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
+        /* ===============================
+           RESET & BASE
+        ================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #f1c232;
             color: #5C4A3E;
             font-family: 'Oswald', sans-serif;
             line-height: 1.7;
-            padding: 60px 20px;
+            padding: 160px 20px 120px;
         }
 
+        /* ===============================
+           NAVIGATION
+        ================================ */
+        .site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #5A4635;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px clamp(25px, 4vw, 60px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .main-nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===============================
+           POST LAYOUT
+        ================================ */
         .post {
             max-width: 800px;
             margin: 0 auto;
@@ -74,46 +133,191 @@
         .post-content p {
             margin-bottom: 20px;
         }
+
+        /* ===============================
+           FOOTER
+        ================================ */
+        footer {
+            padding: 120px clamp(25px, 4vw, 60px);
+            border-top: 1px solid rgba(92, 74, 62, 0.1);
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 200px;
+        }
+
+        .logo-erc {
+            width: 140px;
+        }
+
+        .funding-text {
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.45;
+            opacity: 0.9;
+        }
     </style>
 </head>
+
 <body>
 
+<!-- Header -->
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="../index.html">DATAGOV</a>
+        </div>
+        <nav class="main-nav">
+            <a href="../blog.html">Blog</a>
+            <a href="../main_events.html">Events</a>
+            <a href="../subscribe.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Post -->
 <div class="post">
 
-    <!-- Breadcrumb navigation -->
+    <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../index.html">Home</a>
         <span>/</span>
-        <span>Blog</span>
+        <a href="../blog.html">Blog</a>
         <span>/</span>
-        <span>Title of the blog post</span>
+        <span>Dissecting Digital ID(ea)s</span>
     </nav>
 
     <!-- Blog header -->
     <div class="blog-header">
         <h1>DATAGOV Blog</h1>
         <p>
-            Here you can find works in progress, exploratory notes, and thoughts on current affairs in data infrastructures
+            Here you can find works in progress, exploratory notes, and thoughts on current
+            affairs in data infrastructures.
         </p>
     </div>
 
-    <!-- Blog post -->
+    <!-- Blog post content -->
     <div class="post-content">
-        <h2>Title of the blog post</h2>
+        <h2>Dissecting Digital ID(ea)s</h2>
         <div class="meta">
-            date of publication · name of writer · hashtag
+            3 February 2026 · Mattéo Bard, Giulia Campaioli, Shruti Vanguri · #DigitalID #DigitalMethods #DataInfrastructure #NetworkAnalysis #PolicyAnalysis #DiscourseAnalysis
         </div>
 
         <p>
-            This is where the main text of the blog post goes.
+            <strong>What Digital Identity Systems Tell Us About Power, Governance, and Everyday Life</strong>
+            <br>
+            Digital identity systems are quietly becoming the backbone of contemporary governance. From logging into 
+            public services to accessing welfare and healthcare services, digital IDs increasingly shape who gets access 
+            to what. Despite their growing importance, these systems are often framed as neutral technical upgrades 
+            rather than politically charged infrastructures. 
+            <br>
+            At the <a href="Policy_Implications_of_Administrative_Rollout_of_Digital_IDs">DMI Winter School 2026</a>, 
+            three of us facilitated a collaborative project titled Dissecting Digital ID(ea)s: 
+            Investigating the Infrastructures and Imaginaries of Digital Identity. Over a week-long data sprint, participants 
+            worked together to unpack how digital ID systems are built, legitimized, and contested across different national contexts.
+            Rather than treating digital IDs as single technologies, we approached them as socio-technical assemblages, by which we 
+            mean the complex of national policies, public institutions, private companies, and rhetorics sustaining the implementation 
+            of the technology in our everyday lives. The project focused on five national ID systems: DigiD (Netherlands), BankID (Sweden), 
+            SPID (Italy), Aadhaar (India), and CIN (Brazil), chosen to reflect different governance models and political trajectories.
         </p>
 
         <p>
-            Additional paragraphs go here.
+           <strong>Following the Infrastructure</strong>
+            <br>
+            One of our starting questions was deceptively simple: who actually builds and governs digital ID systems? Using actor-network analysis, 
+            participants mapped the public and private actors involved in designing, maintaining, and operating these infrastructures. 
+            <br>
+            Across all cases, one pattern stood out clearly. No digital ID system is built entirely in-house by the state. Even where governments retain
+            formal authority, key components of the making and maintaining of the technology are delegated to private actors. Digital ID systems emerge as
+            hybrid governance infrastructures, combining public authority with privately operated technological backbones.
+            <br>
+            Sweden’s BankID represents the most extreme version of this arrangement. Banks have not only built the system but also control access to it, 
+            leaving public institutions contractually dependent on private infrastructure to deliver essential identification services. At the other end 
+            of the spectrum, countries like the Netherlands and Brazil attempted to keep digital ID infrastructures largely publicly controlled, yet they
+            still outsourced some technical components.
+            <br>
+            Interestingly, users themselves appear at the margins of these actor networks. While citizens and residents are usually the end-users, and often
+            the ones most affected by system failures or exclusions, their role in shaping digital ID infrastructures is minimal. 
+
         </p>
+
+        <p>
+            <strong>Governance Without Debate</strong>
+            <br>
+            A second major finding concerns how digital ID systems are introduced and legitimized. Comparing policy documents across countries, we found that 
+            most digital IDs were rolled out through administrative or executive processes, rather than parliamentary debate. In several cases, systems were 
+            already operational before comprehensive legal frameworks were in place.
+            <br>
+            This mode of rollout varies systematically with governance arrangements. In cases where digital ID systems remain fully publicly governed, parliamentary
+            approval accompanied their introduction. By contrast, when systems are hybrid or privately dominated, rollout largely occurred through administrative or
+            executive pathways, often preceding comprehensive legislative frameworks.
+            <br>
+            This suggests a broader shift that digital IDs are increasingly treated not as policies to be debated, but as infrastructures to be deployed. Their 
+            legitimacy stems from technical implementation rather than democratic deliberation, raising important questions about accountability and participation
+            in data-driven governance.  
+        </p>
+
+        <p>
+            <strong>What Users Say Online</strong>
+            <br>
+            To understand how digital IDs are experienced by end-users, participants analysed discussions across four major social media platforms (X, YouTube, LinkedIn,
+            and TikTok). Across all countries, contestation dominated over approval in the online public arena. Rather than ideological, criticism was grounded in usage 
+            challenges: system breakdowns, access problems, security concerns, and confusion.
+            <br>
+            Yet this meaning of this critique variess across contexts. In India, discussions around Aadhaar frame technical issues as forms of structural exclusion, 
+            especially where access to welfare depends on successful authentication. In Italy and Sweden, criticism focuses more on inefficiency and cost. In Brazil, much of
+            the discourse revolves around debugging and surveillance concerns. In the Netherlands, DigiD is discussed both as an efficient everyday tool and as a potential security risk.
+            <br>
+            Across cases, social media emerges as a parallel arena of governance, a place where users troubleshoot, share knowledge, and voice concerns largely absent 
+            from formal policy debates.
+        </p>
+
+        <p>
+            <strong>A Growing Gap</strong>
+            <br>
+            When we compared policy documents with social media discourse, a clear misalignment emerged. Policies emphasize design, access, and efficiency; users talk 
+            about security and everyday friction. This gap reflects a broader tension wherein digital ID systems are justified in abstract terms by policy actors, while
+            lived experience is shaped by technical breakdowns and challenges to access.
+            <br>
+            Digital IDs are not just tools of convenience. They are <a href="https://networkcultures.org/blog/2026/01/21/digital-tribulations-6-digital-sovereignty-and-the-political-economy-of-latin-american-platformization/">
+            survival infrastructures</a>, people need them. They are powerful governance infrastructures, reshaping how
+            citizenship and rights are mediated through data. Understanding who builds them, how they are legitimized, and how they are contested is crucial for democratic
+            societies navigating post-pandemic digitalisation.
+            <br>
+            When we look at the results of our DMI project, we see that digital IDs are often presented as seamless solutions, but internet infrastructure and 
+            <a href="https://a4ai.org/research/report/costs-of-exclusion-report/">digital literacy</a>remain are 
+            <a href="https://www.cartografiasdainternet.org/en">unevenly distributed</a>. As a result, the burden 
+            of adaptation often falls on those already most vulnerable, while their voices remain peripheral in decision-making processes.
+            <br>
+            For DATAGOV, this project reflects our broader interest in governance by data infrastructure, and in the need to make these systems visible, debatable, and accountable. 
+            Digital IDs may promise efficiency, but the question that remains is efficient for whom, and at what cost?
+        </p>
+
+        
     </div>
 
 </div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-logos">
+        <img src="../logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="../LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
