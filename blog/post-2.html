@@ -204,6 +204,16 @@
     .post-content img {
       max-width: 800px; /* or whatever width fits your layout better */
     }
+        .post-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.post-image-grid img {
+  max-width: 100%;
+  height: auto;
+}
 
         /* ===============================
            FOOTER
