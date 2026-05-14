@@ -1,0 +1,518 @@
+const pptxgen = require("pptxgenjs");
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
+const sharp = require("sharp");
+
+// Brand colours
+const C = {
+  black:   "1F1300",
+  orange:  "FB6107",
+  green:   "ACCA02",
+  purple:  "623CEA",
+  lavender:"F2EFFF",
+  white:   "FFFFFF",
+};
+
+// Helper: icon to base64 PNG
+async function iconToBase64(IconComponent, color = "#FFFFFF", size = 256) {
+  const { default: Comp } = await Promise.resolve({ default: IconComponent });
+  const svg = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(Comp || IconComponent, { color, size: String(size) })
+  );
+  const buf = await sharp(Buffer.from(svg)).png().toBuffer();
+  return "image/png;base64," + buf.toString("base64");
+}
+
+// Build the linked-squares logo motif as SVG → PNG
+async function logoMotif(color = "#1F1300", size = 512) {
+  // Three squares in an S-shape (data node icon from template)
+  const sq = Math.round(size * 0.36);
+  const r = Math.round(sq * 0.22);
+  const gap = Math.round(size * 0.08);
+  // positions: top-right, middle-left, bottom-right
+  const positions = [
+    { x: size - sq, y: 0 },
+    { x: 0, y: (size - sq) / 2 },
+    { x: size - sq, y: size - sq },
+  ];
+  const rects = positions.map(p =>
+    `<rect x="${p.x}" y="${p.y}" width="${sq}" height="${sq}" rx="${r}" ry="${r}" fill="${color}"/>`
+  ).join("\n");
+  const cx = Math.round(size / 2);
+  const cy = Math.round(size / 2);
+  // connecting lines
+  const lines = `
+    <line x1="${positions[0].x + sq/2}" y1="${positions[0].y + sq}" x2="${cx}" y2="${cy}" stroke="${color}" stroke-width="${gap*0.5}"/>
+    <line x1="${positions[1].x + sq}" y1="${positions[1].y + sq/2}" x2="${cx}" y2="${cy}" stroke="${color}" stroke-width="${gap*0.5}"/>
+    <line x1="${positions[2].x + sq/2}" y1="${positions[2].y}" x2="${cx}" y2="${cy}" stroke="${color}" stroke-width="${gap*0.5}"/>
+  `;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${rects}</svg>`;
+  const buf = await sharp(Buffer.from(svg)).png().toBuffer();
+  return "image/png;base64," + buf.toString("base64");
+}
+
+// Build proper data-node motif (S-shape of 4 rounded squares like in template)
+async function buildMotif(fgColor, size = 400) {
+  const sq = Math.round(size * 0.30);
+  const r = Math.round(sq * 0.25);
+  const half = Math.round((size - sq) / 2);
+  // Layout: top-left, top-right (offset), mid-left, bottom-right
+  // From template: the icon looks like a 2x3 grid with alternating squares connected
+  const s = sq;
+  const g = Math.round(size * 0.06);
+  // 4 squares in S-pattern
+  const positions = [
+    { x: 0, y: 0 },
+    { x: s + g, y: s * 0.5 + g * 0.5 },
+    { x: 0, y: s + g },
+    { x: s + g, y: s * 1.5 + g * 1.5 },
+  ];
+  const totalW = s * 2 + g;
+  const totalH = s * 2 + g * 2;
+  const rects = positions.map(p =>
+    `<rect x="${p.x}" y="${p.y}" width="${s}" height="${s}" rx="${r}" ry="${r}" fill="${fgColor}"/>`
+  ).join("\n");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="${totalH}" viewBox="0 0 ${totalW} ${totalH}">${rects}</svg>`;
+  const buf = await sharp(Buffer.from(svg)).png().toBuffer();
+  return { data: "image/png;base64," + buf.toString("base64"), w: totalW, h: totalH };
+}
+
+async function main() {
+  const pres = new pptxgen();
+  pres.layout = "LAYOUT_16x9"; // 10 x 5.625
+
+  // Pre-render motif variants
+  const motifDark = await buildMotif("#1F1300");
+  const motifOrange = await buildMotif("#FB6107");
+  const motifWhite = await buildMotif("#FFFFFF");
+  const motifGreen = await buildMotif("#ACCA02");
+  const motifPurple = await buildMotif("#623CEA");
+
+  function addMotifDecor(slide, bgColor) {
+    // Large motif bottom-left (partially off-screen)
+    const motif = bgColor === "orange" ? motifDark
+                : bgColor === "black"  ? motifOrange
+                : bgColor === "purple" ? motifWhite
+                : bgColor === "green"  ? motifDark
+                : motifDark; // on lavender/white
+
+    const scale = 1.6;
+    const mw = (motif.w / motif.h) * scale;
+    slide.addImage({ data: motif.data, x: -0.3, y: 5.625 - scale * 0.95, w: mw, h: scale, transparency: 15 });
+    // Small motif top-right
+    const ss = 0.65;
+    const sw = (motif.w / motif.h) * ss;
+    slide.addImage({ data: motif.data, x: 10 - sw - 0.2, y: 0.15, w: sw, h: ss, transparency: 15 });
+  }
+
+  function addLogoLabel(slide, textColor) {
+    // DATAGOV text bottom-right
+    slide.addText([
+      { text: "DATAGOV", options: { bold: true, charSpacing: 3 } },
+      { text: "lab", options: { bold: false, italic: true } },
+    ], {
+      x: 7.8, y: 5.0, w: 2.0, h: 0.45,
+      fontSize: 13, fontFace: "Courier New", color: textColor,
+      align: "right", valign: "middle", margin: 0,
+    });
+  }
+
+  // ─── Slide 1: Title ───────────────────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.black };
+    addMotifDecor(s, "black");
+
+    // Orange accent bar left
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 0.18, h: 5.625, fill: { color: C.orange }, line: { color: C.orange } });
+
+    // Tags row
+    const tags = ["Critical Data Studies", "Biometric Borders", "Health Data", "Algorithmic Governance"];
+    const tagColors = [C.orange, C.green, C.purple, C.orange];
+    let tx = 0.45;
+    for (let i = 0; i < tags.length; i++) {
+      const tw = tags[i].length * 0.085 + 0.25;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: tx, y: 0.3, w: tw, h: 0.28, fill: { color: tagColors[i] }, line: { color: tagColors[i] }, rectRadius: 0.04 });
+      s.addText(tags[i], { x: tx, y: 0.3, w: tw, h: 0.28, fontSize: 9, fontFace: "Courier New", color: C.black, bold: true, align: "center", valign: "middle", margin: 0 });
+      tx += tw + 0.12;
+    }
+
+    // Main title
+    s.addText("Inequality by Infrastructure", {
+      x: 0.45, y: 0.8, w: 9.2, h: 1.6,
+      fontSize: 44, fontFace: "Georgia", color: C.white, bold: true,
+      align: "left", valign: "middle",
+    });
+
+    // Subtitle
+    s.addText("How Regulatory Data Infrastructures Produce Infrastructural Inequalities", {
+      x: 0.45, y: 2.35, w: 7.5, h: 0.9,
+      fontSize: 17, fontFace: "Calibri", color: C.orange,
+      align: "left", valign: "top",
+    });
+
+    // Presentation type
+    s.addText("Academic Presentation — 10 Minutes", {
+      x: 0.45, y: 3.3, w: 6, h: 0.4,
+      fontSize: 12, fontFace: "Courier New", color: C.green,
+      align: "left", valign: "middle",
+    });
+
+    addLogoLabel(s, C.orange);
+  }
+
+  // ─── Slide 2: The Research Problem ────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.lavender };
+    addMotifDecor(s, "lavender");
+
+    // Title bar
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("The Research Problem", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 22, fontFace: "Georgia", color: C.white, bold: true, valign: "middle", margin: 0 });
+
+    // Left card — Context
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 0.85, w: 4.4, h: 4.3, fill: { color: C.white }, line: { color: C.black, width: 1.5 }, shadow: { type: "outer", blur: 8, offset: 3, angle: 135, color: "000000", opacity: 0.1 } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 0.85, w: 0.12, h: 4.3, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText("Context", { x: 0.55, y: 0.95, w: 3.9, h: 0.35, fontSize: 13, fontFace: "Calibri", color: C.black, bold: true, margin: 0 });
+    s.addText("Government agencies increasingly rely on Regulatory Data Infrastructures (RDIs) — digital identity systems, biometric databases, health platforms — to govern access to welfare, healthcare, mobility, and security.\n\nThese systems are justified through narratives of efficiency, fraud prevention, and security. Yet they signal a deeper shift in how governance is exercised.", {
+      x: 0.55, y: 1.35, w: 3.9, h: 3.5,
+      fontSize: 12.5, fontFace: "Calibri", color: C.black,
+      align: "left", valign: "top",
+    });
+
+    // Right card — Central Question (dark)
+    s.addShape(pres.shapes.RECTANGLE, { x: 5.3, y: 0.85, w: 4.4, h: 4.3, fill: { color: C.black }, line: { color: C.black } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 5.3, y: 0.85, w: 0.12, h: 4.3, fill: { color: C.green }, line: { color: C.green } });
+    s.addText("Central Question", { x: 5.55, y: 0.95, w: 3.9, h: 0.35, fontSize: 13, fontFace: "Calibri", color: C.green, bold: true, margin: 0 });
+    s.addText("How do Regulatory Data Infrastructures produce infrastructural inequalities?", {
+      x: 5.55, y: 1.4, w: 3.9, h: 1.5,
+      fontSize: 16, fontFace: "Georgia", color: C.white, bold: true, italic: true,
+      align: "left", valign: "top",
+    });
+    s.addText("We argue that as RDIs increasingly mediate access to public services and rights, they materialise and reinforce pre-existing inequalities through infrastructural choices — not just algorithmic outputs.", {
+      x: 5.55, y: 3.1, w: 3.9, h: 1.8,
+      fontSize: 12, fontFace: "Calibri", color: C.orange,
+      align: "left", valign: "top",
+    });
+
+    addLogoLabel(s, C.black);
+  }
+
+  // ─── Slide 3: Theoretical Framework ────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.black };
+    addMotifDecor(s, "black");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText("Theoretical Framework", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 22, fontFace: "Georgia", color: C.black, bold: true, valign: "middle", margin: 0 });
+
+    const cols = [
+      { title: "Critical Data Studies", color: C.green, body: "Data and data practices are never neutral — they are embedded in sociotechnical imaginaries, institutional arrangements, and historically patterned relations of power and inequality." },
+      { title: "Datafication & Recursivity", color: C.orange, body: "The relation between data and the social world is recursive: data are used to act upon social life, reshaping the conditions under which future data are generated, intensifying inequality." },
+      { title: "Infrastructure Studies", color: C.purple, body: "Infrastructures distribute resources, shape life chances, and allocate vulnerability through standards, interfaces, and accountability affordances — not only through algorithmic outputs." },
+    ];
+
+    const colW = 2.9, colH = 3.9, startX = 0.3;
+    for (let i = 0; i < 3; i++) {
+      const x = startX + i * (colW + 0.25);
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 0.85, w: colW, h: colH, fill: { color: "1A0E00" }, line: { color: cols[i].color, width: 2 } });
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 0.85, w: colW, h: 0.42, fill: { color: cols[i].color }, line: { color: cols[i].color } });
+      s.addText(cols[i].title, { x: x + 0.1, y: 0.85, w: colW - 0.2, h: 0.42, fontSize: 12, fontFace: "Calibri", color: C.black, bold: true, valign: "middle", margin: 0 });
+      s.addText(cols[i].body, { x: x + 0.15, y: 1.4, w: colW - 0.3, h: 3.2, fontSize: 12, fontFace: "Calibri", color: C.white, align: "left", valign: "top" });
+    }
+
+    // Key concept footer
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 4.95, w: 9.4, h: 0.48, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText("Key concept: Infrastructural Inequalities — forms of discrimination, exclusion, and oppression that originate from and depend on infrastructural arrangements.", {
+      x: 0.4, y: 4.95, w: 9.2, h: 0.48, fontSize: 10.5, fontFace: "Calibri", color: C.black, bold: true, valign: "middle", margin: 0,
+    });
+
+    addLogoLabel(s, C.orange);
+  }
+
+  // ─── Slide 4: Infrastructural Inequalities — Key Concept ─────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.orange };
+    addMotifDecor(s, "orange");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("Infrastructural Inequalities — Key Concept", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 20, fontFace: "Georgia", color: C.white, bold: true, valign: "middle", margin: 0 });
+
+    s.addText("Forms of discrimination, exclusion, and oppression that originate from and depend on the material and institutional arrangements of regulatory data infrastructures.", {
+      x: 0.4, y: 0.85, w: 9.2, h: 0.7, fontSize: 14, fontFace: "Calibri", color: C.black, italic: true, align: "left",
+    });
+
+    const items = [
+      { num: "1", title: "Structural character", body: "Foregrounds how disadvantage is captured, organized, and stabilised through joint action of technical AND institutional systems — not algorithms alone." },
+      { num: "2", title: "Beyond algorithmic racism", body: "Attends to recurrent and recursive aftereffects across the population, extended beyond individual systems or moments of decision-making." },
+      { num: "3", title: "Multi-layer analysis", body: "Enables examination across data production, storage, system design, legal mandates — not only at the algorithmic processing layer." },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const y = 1.65 + i * 1.18;
+      // Number circle (black)
+      s.addShape(pres.shapes.OVAL, { x: 0.3, y: y + 0.05, w: 0.55, h: 0.55, fill: { color: C.black }, line: { color: C.black } });
+      s.addText(items[i].num, { x: 0.3, y: y + 0.05, w: 0.55, h: 0.55, fontSize: 16, fontFace: "Courier New", color: C.orange, bold: true, align: "center", valign: "middle", margin: 0 });
+      // Card
+      s.addShape(pres.shapes.RECTANGLE, { x: 1.05, y, w: 8.6, h: 1.0, fill: { color: C.black }, line: { color: C.black }, shadow: { type: "outer", blur: 6, offset: 2, angle: 135, color: "000000", opacity: 0.2 } });
+      s.addText(items[i].title, { x: 1.2, y: y + 0.05, w: 8.2, h: 0.35, fontSize: 13, fontFace: "Calibri", color: C.green, bold: true, margin: 0 });
+      s.addText(items[i].body, { x: 1.2, y: y + 0.38, w: 8.2, h: 0.55, fontSize: 11.5, fontFace: "Calibri", color: C.white, valign: "top", margin: 0 });
+    }
+
+    addLogoLabel(s, C.black);
+  }
+
+  // ─── Slide 5: Research Design ─────────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.lavender };
+    addMotifDecor(s, "lavender");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("Research Design", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 22, fontFace: "Georgia", color: C.white, bold: true, valign: "middle", margin: 0 });
+
+    // Subtitle row
+    const methods = ["Research-as-Assemblage", "Comparative Case Studies", "Theoretical Sampling"];
+    let mx = 1.3;
+    for (const m of methods) {
+      const tw = m.length * 0.09 + 0.3;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: mx, y: 0.82, w: tw, h: 0.28, fill: { color: "transparent" }, line: { color: C.black, width: 1.5 }, rectRadius: 0.04 });
+      s.addText(m, { x: mx, y: 0.82, w: tw, h: 0.28, fontSize: 9.5, fontFace: "Courier New", color: C.black, bold: true, align: "center", valign: "middle", margin: 0 });
+      mx += tw + 0.25;
+    }
+
+    const cases = [
+      {
+        label: "Case 1 › Hyper-legibility",
+        labelBg: C.black,
+        title: "EU Biometric Border Infrastructure",
+        domain: "Security / Migration",
+        systems: "EES · VIS · ETIAS · Eurodac · SIS · ECRIS-TCN",
+        method: "EU policy docs, technical documentation, secondary scholarship on biometric border governance",
+      },
+      {
+        label: "Case 2 › Uneven legibility",
+        labelBg: C.purple,
+        title: "India — Ayushman Bharat Digital Mission (ABDM)",
+        domain: "Healthcare",
+        systems: "Health IDs · EHR frameworks · Interoperability layer",
+        method: "ABDM architecture docs, governance materials, critical scholarship on health digitisation",
+      },
+    ];
+
+    for (let i = 0; i < 2; i++) {
+      const x = 0.3 + i * 4.9;
+      const c = cases[i];
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 1.25, w: 4.5, h: 4.0, fill: { color: C.white }, line: { color: C.black, width: 1.5 }, shadow: { type: "outer", blur: 6, offset: 2, angle: 135, color: "000000", opacity: 0.1 } });
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 1.25, w: 4.5, h: 0.38, fill: { color: c.labelBg }, line: { color: c.labelBg } });
+      s.addText(c.label, { x: x + 0.1, y: 1.25, w: 4.3, h: 0.38, fontSize: 11, fontFace: "Courier New", color: C.white, bold: true, valign: "middle", margin: 0 });
+      s.addText(c.title, { x: x + 0.15, y: 1.75, w: 4.2, h: 0.65, fontSize: 14, fontFace: "Georgia", color: C.black, bold: true, valign: "top" });
+      s.addText("Domain:", { x: x + 0.15, y: 2.5, w: 0.85, h: 0.28, fontSize: 10.5, fontFace: "Calibri", color: C.orange, bold: true, margin: 0 });
+      s.addText(c.domain, { x: x + 1.05, y: 2.5, w: 3.3, h: 0.28, fontSize: 10.5, fontFace: "Calibri", color: C.black, margin: 0 });
+      s.addText("Systems:", { x: x + 0.15, y: 2.9, w: 0.85, h: 0.28, fontSize: 10.5, fontFace: "Calibri", color: C.orange, bold: true, margin: 0 });
+      s.addText(c.systems, { x: x + 1.05, y: 2.9, w: 3.3, h: 0.28, fontSize: 10.5, fontFace: "Calibri", color: C.black, margin: 0 });
+      s.addText("Method:", { x: x + 0.15, y: 3.3, w: 0.85, h: 0.28, fontSize: 10.5, fontFace: "Calibri", color: C.orange, bold: true, margin: 0 });
+      s.addText(c.method, { x: x + 0.15, y: 3.65, w: 4.2, h: 1.4, fontSize: 11, fontFace: "Calibri", color: C.black, valign: "top" });
+    }
+
+    addLogoLabel(s, C.black);
+  }
+
+  // ─── Slide 6: Case 1 — EU Biometric Border Infrastructure ────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.black };
+    addMotifDecor(s, "black");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.green }, line: { color: C.green } });
+    s.addText("Case 1: EU Biometric Border Infrastructure", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 20, fontFace: "Georgia", color: C.black, bold: true, valign: "middle", margin: 0 });
+    s.addText("Hyper-legibility  →  Crimmigration & Dataveillance", { x: 0.4, y: 0.78, w: 9.2, h: 0.32, fontSize: 12, fontFace: "Calibri", color: C.green, italic: true, margin: 0 });
+
+    const mechanisms = [
+      { title: "Scope Creep via Interoperability", body: "Linking EES (biometric entry/exit), SIS (police alerts), Eurodac (asylum seekers) and 4 more databases collapses migration, border control, and criminal justice into one environment." },
+      { title: "Probabilistic Matching & Sticky Suspicion", body: "Larger databases → higher false positive rates. A single erroneous match enters the data profile and is repeatedly re-used in future risk assessments. Suspicion becomes 'sticky'." },
+      { title: "Diffuse Accountability & Constrained Redress", body: "Distributed data across member states and EU agencies makes it structurally difficult to identify responsible controllers, correct erroneous entries, or challenge decisions." },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const x = 0.25 + i * 3.25;
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 1.2, w: 3.1, h: 3.25, fill: { color: "1A0E00" }, line: { color: C.green, width: 1.5 } });
+      s.addShape(pres.shapes.RECTANGLE, { x, y: 1.2, w: 3.1, h: 0.06, fill: { color: C.green }, line: { color: C.green } });
+      s.addText(mechanisms[i].title, { x: x + 0.12, y: 1.3, w: 2.88, h: 0.6, fontSize: 12, fontFace: "Calibri", color: C.green, bold: true, valign: "top" });
+      s.addText(mechanisms[i].body, { x: x + 0.12, y: 2.0, w: 2.88, h: 2.35, fontSize: 11.5, fontFace: "Calibri", color: C.white, valign: "top" });
+    }
+
+    // Key finding bar
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.25, y: 4.6, w: 9.5, h: 0.78, fill: { color: C.green }, line: { color: C.green } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.25, y: 4.6, w: 0.1, h: 0.78, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("Key finding: Inequality shifts from discretionary decision-making to the infrastructural level, where unequal treatment is produced automatically through continuous surveillance, cross-database matching, and risk profiling that disproportionately targets migrants as default security subjects.", {
+      x: 0.45, y: 4.6, w: 9.2, h: 0.78, fontSize: 9.5, fontFace: "Calibri", color: C.black, bold: true, valign: "middle", margin: 0,
+    });
+
+    addLogoLabel(s, C.green);
+  }
+
+  // ─── Slide 7: Case 2 — India ABDM ──────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.purple };
+    addMotifDecor(s, "purple");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("Case 2: India's ABDM Health Data Infrastructure", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 20, fontFace: "Georgia", color: C.white, bold: true, valign: "middle", margin: 0 });
+    s.addText("Uneven legibility  →  Data poverty & exclusion by design", { x: 0.4, y: 0.78, w: 9.2, h: 0.32, fontSize: 12, fontFace: "Calibri", color: C.lavender, italic: true, margin: 0 });
+
+    // Left column
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 1.2, w: 4.5, h: 4.05, fill: { color: "2E1A6E" }, line: { color: C.lavender, width: 1 } });
+    s.addText("Health Data Poverty — Structurally Produced", { x: 0.45, y: 1.3, w: 4.2, h: 0.45, fontSize: 13, fontFace: "Calibri", color: C.orange, bold: true });
+
+    s.addText("Urban, formally institutionalised facilities", { x: 0.45, y: 1.82, w: 4.2, h: 0.28, fontSize: 12, fontFace: "Calibri", color: C.white, bold: true, margin: 0 });
+    s.addText("generate high-volume standardised data → high visibility in governance analytics.", { x: 0.45, y: 2.12, w: 4.2, h: 0.45, fontSize: 11.5, fontFace: "Calibri", color: C.lavender, margin: 0 });
+
+    s.addText("Rural, peripheral, and informal care providers", { x: 0.45, y: 2.65, w: 4.2, h: 0.28, fontSize: 12, fontFace: "Calibri", color: C.white, bold: true, margin: 0 });
+    s.addText("rely on paper records → excluded from digital data flows and policy attention.", { x: 0.45, y: 2.95, w: 4.2, h: 0.45, fontSize: 11.5, fontFace: "Calibri", color: C.lavender, margin: 0 });
+
+    s.addText("Data poverty is not individual failure but a structurally generated outcome of healthcare market stratification.", { x: 0.45, y: 3.5, w: 4.2, h: 0.65, fontSize: 11.5, fontFace: "Calibri", color: C.orange, italic: true });
+
+    // Right column
+    s.addShape(pres.shapes.RECTANGLE, { x: 5.2, y: 1.2, w: 4.5, h: 4.05, fill: { color: "2E1A6E" }, line: { color: C.lavender, width: 1 } });
+    s.addText("Recursive Data Loops", { x: 5.35, y: 1.3, w: 4.2, h: 0.45, fontSize: 13, fontFace: "Calibri", color: C.green, bold: true });
+    s.addText("Data generated through healthcare encounters feeds back into policy, resource allocation, and clinical priorities.\n\nPopulations that generate more data attract greater regulatory attention, funding, and investment.\n\nData-poor populations experience reduced institutional recognition and diminished policy attention — exclusion becomes self-reinforcing.", {
+      x: 5.35, y: 1.82, w: 4.2, h: 3.2, fontSize: 12, fontFace: "Calibri", color: C.lavender,
+    });
+
+    addLogoLabel(s, C.lavender);
+  }
+
+  // ─── Slide 8: Comparative Findings ────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.black };
+    addMotifDecor(s, "black");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText("Comparative Findings: Two Modes of Infrastructural Inequality", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 18, fontFace: "Georgia", color: C.black, bold: true, valign: "middle", margin: 0 });
+
+    const rows = [
+      { label: "Core mechanism", eu: "Interoperability links databases, enabling cross-domain data re-use", india: "Enrolment/standardisation requirements shape who can participate in care" },
+      { label: "Inequality mode", eu: "Over-visibility: migrants continuously profiled as security subjects", india: "Under-visibility: informal care and rural populations rendered invisible" },
+      { label: "Consent & opt-out", eu: "Biometric enrolment quasi-mandatory for border crossing; refusal penalised", india: "Formally voluntary, but infrastructurally necessary for seamless care access" },
+      { label: "Accountability", eu: "Distributed across member states + EU agencies; no single responsible actor", india: "Fragmented across public/private health actors; redress pathways unclear" },
+      { label: "Temporal effects", eu: "Sticky suspicion — misclassifications propagate across interconnected systems", india: "Recursive data loops — data poverty accumulates and self-reinforces over time" },
+    ];
+
+    // Header row
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.25, y: 0.78, w: 2.3, h: 0.38, fill: { color: "2A1A00" }, line: { color: "2A1A00" } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 2.65, y: 0.78, w: 3.5, h: 0.38, fill: { color: C.green }, line: { color: C.green } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 6.25, y: 0.78, w: 3.5, h: 0.38, fill: { color: C.purple }, line: { color: C.purple } });
+    s.addText("EU — Hyper-legibility", { x: 2.65, y: 0.78, w: 3.5, h: 0.38, fontSize: 11, fontFace: "Courier New", color: C.black, bold: true, align: "center", valign: "middle", margin: 0 });
+    s.addText("India ABDM — Uneven legibility", { x: 6.25, y: 0.78, w: 3.5, h: 0.38, fontSize: 11, fontFace: "Courier New", color: C.white, bold: true, align: "center", valign: "middle", margin: 0 });
+
+    for (let i = 0; i < rows.length; i++) {
+      const y = 1.25 + i * 0.82;
+      const rowBg = i % 2 === 0 ? "1A0E00" : "221500";
+      s.addShape(pres.shapes.RECTANGLE, { x: 0.25, y, w: 9.5, h: 0.75, fill: { color: rowBg }, line: { color: rowBg } });
+      s.addShape(pres.shapes.RECTANGLE, { x: 0.25, y, w: 2.3, h: 0.75, fill: { color: "1A0E00" }, line: { color: C.orange, width: 0.5 } });
+      s.addText(rows[i].label, { x: 0.35, y, w: 2.1, h: 0.75, fontSize: 10.5, fontFace: "Calibri", color: C.orange, bold: true, valign: "middle" });
+      s.addShape(pres.shapes.RECTANGLE, { x: 2.65, y, w: 3.5, h: 0.75, fill: { color: rowBg }, line: { color: C.green, width: 0.5 } });
+      s.addText(rows[i].eu, { x: 2.75, y, w: 3.3, h: 0.75, fontSize: 10, fontFace: "Calibri", color: C.white, valign: "middle" });
+      s.addShape(pres.shapes.RECTANGLE, { x: 6.25, y, w: 3.5, h: 0.75, fill: { color: rowBg }, line: { color: C.purple, width: 0.5 } });
+      s.addText(rows[i].india, { x: 6.35, y, w: 3.3, h: 0.75, fontSize: 10, fontFace: "Calibri", color: C.white, valign: "middle" });
+    }
+
+    addLogoLabel(s, C.orange);
+  }
+
+  // ─── Slide 9: Recurring Mechanisms & Regulatory Implications ──────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.lavender };
+    addMotifDecor(s, "lavender");
+
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.black }, line: { color: C.black } });
+    s.addText("Recurring Mechanisms & Regulatory Implications", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 20, fontFace: "Georgia", color: C.white, bold: true, valign: "middle", margin: 0 });
+
+    // 5 mechanism pills
+    const mechs = [
+      { top: "Scope creep", bottom: "via interoperability", c: C.black },
+      { top: "Sticky suspicion", bottom: "error propagation", c: C.black },
+      { top: "Ideal data subject", bottom: "standardisation bias", c: C.black },
+      { top: "Data poverty", bottom: "uneven legibility", c: C.black },
+      { top: "Constrained redress", bottom: "diffuse accountability", c: C.black },
+    ];
+    const pillColors = [C.orange, C.green, C.purple, C.orange, C.green];
+    const pillW = 1.72;
+    for (let i = 0; i < 5; i++) {
+      const x = 0.25 + i * (pillW + 0.07);
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 0.82, w: pillW, h: 0.72, fill: { color: pillColors[i] }, line: { color: pillColors[i] }, rectRadius: 0.06 });
+      s.addText(mechs[i].top, { x, y: 0.85, w: pillW, h: 0.3, fontSize: 10.5, fontFace: "Courier New", color: C.black, bold: true, align: "center", valign: "middle", margin: 0 });
+      s.addText(mechs[i].bottom, { x, y: 1.15, w: pillW, h: 0.3, fontSize: 9, fontFace: "Calibri", color: C.black, align: "center", valign: "middle", margin: 0 });
+    }
+
+    // Implications header
+    s.addText("Implications for Data Protection & Governance", { x: 0.3, y: 1.7, w: 9.4, h: 0.38, fontSize: 15, fontFace: "Georgia", color: C.black, bold: true, margin: 0 });
+
+    const impl = [
+      { title: "Purpose Limitation", body: "Interoperability structurally undermines GDPR's purpose limitation. Continual data accumulation is incompatible with closed-purpose models.", color: C.orange },
+      { title: "Audit Interoperability", body: "Regulators should treat interoperability as a high-stakes political and technical choice subject to robust impact assessment.", color: C.green },
+      { title: "Non-digital alternatives", body: "Where RDIs become gateways to essential services, meaningful non-digital pathways must be maintained. Consent cannot be 'formal' when refusal carries severe consequences.", color: C.purple },
+      { title: "Unified redress routes", body: "Clear, single-entry pathways for explanation, correction, and remedy that do not require navigating multiple agencies or jurisdictions.", color: C.orange },
+    ];
+
+    for (let i = 0; i < 4; i++) {
+      const x = 0.25 + (i % 2) * 4.9;
+      const y = 2.18 + Math.floor(i / 2) * 1.55;
+      s.addShape(pres.shapes.RECTANGLE, { x, y, w: 4.55, h: 1.38, fill: { color: C.white }, line: { color: impl[i].color, width: 2 }, shadow: { type: "outer", blur: 5, offset: 2, angle: 135, color: "000000", opacity: 0.08 } });
+      s.addShape(pres.shapes.RECTANGLE, { x, y, w: 0.1, h: 1.38, fill: { color: impl[i].color }, line: { color: impl[i].color } });
+      s.addText(impl[i].title, { x: x + 0.2, y: y + 0.08, w: 4.2, h: 0.3, fontSize: 12.5, fontFace: "Calibri", color: impl[i].color, bold: true, margin: 0 });
+      s.addText(impl[i].body, { x: x + 0.2, y: y + 0.42, w: 4.2, h: 0.88, fontSize: 11, fontFace: "Calibri", color: C.black, valign: "top" });
+    }
+
+    addLogoLabel(s, C.black);
+  }
+
+  // ─── Slide 10: Conclusion ──────────────────────────────────────────────────
+  {
+    const s = pres.addSlide();
+    s.background = { color: C.black };
+    addMotifDecor(s, "black");
+
+    // Top orange stripe
+    s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText("Conclusion", { x: 0.4, y: 0, w: 9.2, h: 0.7, fontSize: 26, fontFace: "Georgia", color: C.black, bold: true, valign: "middle", margin: 0 });
+
+    const rows2 = [
+      { label: "What", color: C.green, text: "RDIs produce inequality not through isolated biased outputs, but through infrastructural arrangements that distribute legibility, risk, and remedy across populations." },
+      { label: "How", color: C.purple, text: "Two distinct modes — hyper-legibility (EU borders) and uneven legibility (India health) — sustained by shared mechanisms: scope creep, sticky suspicion, ideal data subject, data poverty, constrained redress." },
+      { label: "Why it matters", color: C.orange, text: "Governing RDIs requires moving beyond system-by-system compliance toward assessing the infrastructural conditions that make inequality durable — including interoperability regimes, purpose minimisation, and accessible redress." },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const y = 0.9 + i * 1.1;
+      s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y, w: 1.4, h: 0.85, fill: { color: rows2[i].color }, line: { color: rows2[i].color } });
+      s.addText(rows2[i].label, { x: 0.3, y, w: 1.4, h: 0.85, fontSize: 13, fontFace: "Courier New", color: C.black, bold: true, align: "center", valign: "middle", margin: 0 });
+      s.addShape(pres.shapes.RECTANGLE, { x: 1.85, y, w: 7.9, h: 0.85, fill: { color: "1A0E00" }, line: { color: rows2[i].color, width: 1 } });
+      s.addText(rows2[i].text, { x: 2.0, y, w: 7.6, h: 0.85, fontSize: 12, fontFace: "Calibri", color: C.white, valign: "middle" });
+    }
+
+    // Closing quote
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 4.25, w: 9.4, h: 1.1, fill: { color: "1A0E00" }, line: { color: C.orange, width: 1.5 } });
+    s.addShape(pres.shapes.RECTANGLE, { x: 0.3, y: 4.25, w: 0.12, h: 1.1, fill: { color: C.orange }, line: { color: C.orange } });
+    s.addText([
+      { text: "\u201cProtecting rights in datafied societies increasingly depends on governing the infrastructures that render people visible, actionable, and contestable in the first place.\u201d", options: { italic: true } }
+    ], {
+      x: 0.55, y: 4.25, w: 9.0, h: 1.1,
+      fontSize: 13, fontFace: "Georgia", color: C.orange, valign: "middle",
+    });
+
+    addLogoLabel(s, C.orange);
+  }
+
+  await pres.writeFile({ fileName: "/mnt/user-data/outputs/Inequality_by_Infrastructure_DATAGOV.pptx" });
+  console.log("Done!");
+}
+
+main().catch(e => { console.error(e); process.exit(1); });
