@@ -1,1 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reflections from the Statecraft, Sovereignty and Digital Government Symposium | DATAGOV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===============================
+           RESET & BASE
+        ================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1c232;
+            color: #5C4A3E;
+            font-family: 'Oswald', sans-serif;
+            line-height: 1.7;
+            padding-top: 160px;
+            padding-bottom: 120px;
+        }
+
+        /* ===============================
+           SHARED PAGE WIDTH
+        ================================ */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(25px, 4vw, 60px);
+        }
+
+        /* ===============================
+           NAVIGATION
+        ================================ */
+        .site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #5A4635;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px clamp(25px, 4vw, 60px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .main-nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===============================
+           POST LAYOUT
+        ================================ */
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            font-size: 15px;
+            margin-bottom: 35px;
+            opacity: 0.85;
+        }
+
+        .breadcrumb a {
+            color: #5C4A3E;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 6px;
+        }
+
+        /* Blog header */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-header h1 {
+            font-size: clamp(36px, 5vw, 60px);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .blog-header p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Post content */
+        .post-content h2 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .post-content .meta {
+            font-size: 15px;
+            opacity: 0.75;
+            margin-bottom: 30px;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* ===============================
+           IMAGE ROW
+        ================================ */
+        .post-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .post-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+            .post-content p {
+                text-align: left;
+            }
+
+            .post-images {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ===============================
+           IMAGE BLOCK (ALIGNED WITH TEXT)
+        ================================ */
+        .post-content figure {
+            margin: 40px 0;
+        }
+        
+        .post-content img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .post-content figcaption {
+            font-size: 14px;
+            opacity: 0.75;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* ===============================
+           FOOTER
+        ================================ */
+        footer {
+            padding: 120px clamp(25px, 4vw, 60px);
+            border-top: 1px solid rgba(92, 74, 62, 0.1);
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 200px;
+        }
+
+        .logo-erc {
+            width: 140px;
+        }
+
+        .funding-text {
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.45;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="../index.html">DATAGOV</a>
+        </div>
+        <nav class="main-nav">
+            <a href="../blog.html">Blog</a>
+            <a href="../main_events.html">Events</a>
+            <a href="../subscribe.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Page Content -->
+<div class="page-container">
+    <div class="post">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>/</span>
+            <a href="../blog.html">Blog</a>
+            <span>/</span>
+            <span>Reflections from the Statecraft, Sovereignty and Digital Government Symposium </span>
+        </nav>
+
+        <!-- Blog header -->
+        <div class="blog-header">
+            <h1>DATAGOV Blog</h1>
+            <p>
+                Here you can find works in progress, exploratory notes, and thoughts on current
+                affairs in data infrastructures.
+            </p>
+        </div>
+
+        <!-- Blog post content -->
+        <div class="post-content">
+            <h2>Reflections from the Statecraft, Sovereignty and Digital Government Symposium </h2>
+        <div class="meta">
+            03 June 2026 · Sruthi Vanguri · #DATAGOV #KickOff #Biometrics #DigitalID #DigitalHealth #Edtech #Infrastructure #ExpertWorkshop #GovernancebyDataInfrastructure
+        </div>
+    <section class="post-content">
+
+    <p>
+        We are sitting around the table at the Institute for Advanced Studies, with experts and scholars on data infrastructures from all over the world. The professional illustrator MaryJet, who specializes in mapping processes and projects in a visual format, sets up her easel. She is going to draw a poster that will serve as a report of the workshop, showcasing each attendee’s intervention as well as the discussions that follow.
+    </p>
+
+    <p>
+        Stefania Milan, the Principal Investigator of DATAGOV, welcomes everyone and introduces them to the aim of the workshop: “This workshop aims to map the terrain of governance by data infrastructure by bringing together people from academia, policymaking, and civil society. We hope that this collaborative workshop will allow you to share key concerns and insights on data-driven governance, and shed light on the tensions and ways forward”.
+    </p>
+
+    <p>
+        Before giving the floor to participants, Carina Nasser, PhD student, presents the DATAGOV team and each member’s line of research, setting the stage for the contexts and technologies of interest. Through ethnographic, mixed-methods, and participatory approaches, the team sets out to study digital IDs, biometrics, health techs, and educational technologies in Europe, India, Brazil and South Africa.
+    </p>
+
+    <p>
+        Mirca Madianou starts off the conversation by sharing her observations from working at a refugee camp in Thailand. She witnessed how digital IDs became standardized, with refugees having to scan their faces each day to receive rations. This raises a critical question, says Madianou: if refugees have to give up their biometric data in order to receive basic aid, is that aid really free?
+    </p>
+
+        
+    <p>
+        Her question condenses what is at stake in the broader issue that DATAGOV seeks to investigate. Data infrastructures are no longer supporting governance: they are becoming a form of governance themselves. Yet these infrastructures are largely invisible, coming about through private-public partnerships with little to no political debate or participation from the people affected by them. The question then is not only what these systems do, but what happens to democracy when governance is embedded in these infrastructures. 
+    </p>
+
+         <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/DSC00231.jpg"
+            <figcaption>
+            <i>Day 1 of the Kick-Off Event. Institute for Advanced Study, University of Amsterdam</i>
+            </figcaption>
+        </figure>
+        </div>
+    <p>
+        One thing that becomes apparent through the discussions is that governance by data infrastructures is increasingly becoming a global reality. Geopolitical context matters here, as global power imbalances determine where data infrastructures are implemented and in what way. Whereas digital infrastructures are often seen as a threat to democracy in the Global North, in the Global South they are often proposed as a solution by which to bridge inequality gaps and sometimes even strengthen democracy.
+    </p>
+
+
+    
+    <p>
+        Cecilia Passanti talks about Senegal, for example, where the implementation of biometrics was historically associated with the process of decolonialization to ensure voting legitimacy. Nevertheless, Bidisha Chaudhuri adds that these decolonial narratives are often appropriated by actors that seek to push data infrastructures for their own benefit, obfuscating actual power relations. As put by Marjolein Lanzig, these technological tools are not neutral: they constitute a new constitutional layer and are therefore intrinsically political. In the Global North, private-public partnerships are often mentioned alongside concerns, as these entanglements allow unelected private actors to influence governance through the technologies they introduce. The discussions reveal that the distinction between private and public has never been cut and dry. “The Netherlands was founded by private companies” says Niels ten Oever, mentioning the Dutch East India Company and the water management boards as examples.  
+    </p>
+
+    <p>
+        Jo Pierson argues we should instead ask how we steer private organizations in the right direction. Bidisha Chaudhuri and Fernando Filgueiras point out that the narrative around private VS public overlooks a third sector: that of non-profit organizations. Funded by philanthropists, Chaudhuri warns that these organizations often push the same techno-political agenda as Big Tech. Whether private, public, or non-profit, the actors building these data infrastructures should be held accountable for their decision making. As put by Rocco Bellanova: we need to understand how data infrastructures are increasingly governing societies, including liberal democracies. Opinions diverged on how best to approach this undertaking.
+    </p>
+
+    
+    <p>
+        Rob van Kranenburg argues for changing the systems from within by creating fairer and more transparent infrastructures. Currently, he is working on an open 6G device ecosystem in collaboration with the Institute of Electrical and Electronics Engineers (IEEE). Other participants question whether fairness and transparency are still useful concepts to understand the public’s autonomy, as they do not expose tech companies’ ideologies and the constitutional power they hold. “We should still demand an account,” says Louise Amoore, “but by looking at how AI is transforming forms of governance, rather than its inner functioning.” Simply being able to view the code of algorithms is not enough, she argues. We need to engage with the social and technical conditions under which they are created and used. 
+    </p>
+
+             <div>
+     <div class="post-image-grid">
+    <figure>
+        <img src="/images/DSC04367.jpg"
+        <figcaption>
+            <i>The invited scholars and DATAGOV team during the focus groups, on Day 1 of the Kick-Off Event at the Institute for Advanced Study, University of Amsterdam</i>
+        </figcaption>
+    </figure>
+</div>
+
+             
+    <p>
+        After the roundtable discussions, the attendees are invited to engage with three focus groups where, in turn, they discussed data governance in the domains of health, biometrics/digital IDs and education technologies. The results are presented in mind maps, which showcase diverging viewpoints and insights. These maps show the importance of geopolitical context when analyzing data infrastructures, as these systems carry promises of decolonization and equality while, at the same time, they risk creating new power relations and inequalities. Participants propose different views on whether the potential harms of Regulatory Data Infrastructures (RDI) can best be mitigated through resistance or reform. Although the concepts of fairness and transparency have long been used to demand accountability from tech companies, the account may be incomplete without a review of their ideologies and constitutional power.
+    </p>
+
+
+    <p>
+        At the end of the day, MaryJet puts her marker down. "As an expectant mother, these discussions give me hope”, she shared. Although data-driven governance challenges our current understanding of democracy, reflecting on this shifting framework helps direct us toward an alternative future: one where data infrastructures are in service of the people, rather than the other way around. 
+    </p>
+
+<div style="display:flex; flex-direction:row; gap:1rem;">
+    <figure style="flex:1; margin:0;">
+        <img src="/images/Scan_4694-02.jpg" alt="Poster 1" style="width:100%; height:auto;">
+        <figcaption>
+            <i>MaryJet's final poster gives a visual representation of the discussions on DAY 1 of the DATAGOV Kick-off event</i>
+        </figcaption>
+    </figure>
+    <figure style="flex:1; margin:0;">
+        <img src="/images/Scan_4694-01.jpg" alt="Poster 2" style="width:100%; height:auto;">
+    </figure>
+</div>
+
+    
+</section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-logos">
+        <img src="../logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="../LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
