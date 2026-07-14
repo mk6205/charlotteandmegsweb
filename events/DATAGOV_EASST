@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DATAGOV Kickoff 2026</title>
+<title>DATAGOV goes to EASST 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -225,12 +225,12 @@ footer {
 
 <main>
 
-    <h1 class="event-title">DATAGOV EASST 2026</h1>
+    <h1 class="event-title">DATAGOV goes to EASST 2026</h1>
 
     <section class="event-header">
 
         <div class="event-poster">
-           <img src="../images/datagov_EASST_2026.png" alt="DATAGOV at EASST 2026">
+           <img src="../images/datagov_EASST_2026.png" alt="EASST Conference">
         </div>
 
         <div class="event-meta">
