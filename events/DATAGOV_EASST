@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DATAGOV Kickoff 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===============================
+   RESET & BASE
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f1c232;
+    color: #5C4A3E;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+/* ===============================
+   NAVIGATION (SAME AS INDEX)
+================================ */
+.site-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #5A4635;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px clamp(25px, 4vw, 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: white;
+}
+.nav-logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-nav a:hover {
+    opacity: 0.8;
+}
+
+/* ===============================
+   PAGE LAYOUT
+================================ */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 160px 30px 120px;
+}
+
+/* ===============================
+   EVENT TITLE
+================================ */
+.event-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 6vw, 90px);
+    letter-spacing: 2px;
+    margin-bottom: 60px;
+}
+
+/* ===============================
+   EVENT HEADER (IMAGE + META)
+================================ */
+.event-header {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+    margin-bottom: 80px;
+}
+
+/* Poster image (vertical) */
+.event-poster img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Event meta */
+.event-meta {
+    max-width: 420px;
+}
+
+.event-meta-item {
+    margin-bottom: 22px;
+}
+
+.event-meta-label {
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.event-meta-value {
+    font-size: 18px;
+    margin-top: 4px;
+}
+
+.event-meta a {
+    color: #6b4a2b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.event-meta a:hover {
+    text-decoration: underline;
+}
+
+/* ===============================
+   EVENT CONTENT
+================================ */
+.event-content {
+    max-width: 760px;
+}
+
+.event-content p {
+    margin-bottom: 26px;
+}
+
+.event-content strong {
+    font-weight: 600;
+}
+
+/* ===============================
+   FOOTER (SAME AS INDEX)
+================================ */
+footer {
+    padding: 120px clamp(25px, 4vw, 60px);
+    border-top: 1px solid rgba(92, 74, 62, 0.1);
+}
+
+.footer-logos {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 200px;
+}
+
+.logo-erc {
+    width: 140px;
+}
+
+.funding-text {
+    max-width: 400px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+    .event-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .event-meta {
+        max-width: 100%;
+    }
+
+    .event-content {
+        max-width: 100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="../index.html">DATAGOV</a>
+        </div>
+        <nav class="main-nav">
+            <a href="../blog.html">Blog</a>
+            <a href="../main_events.html">Events</a>
+            <a href="../subscribe.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <h1 class="event-title">DATAGOV EASST 2026</h1>
+
+    <section class="event-header">
+
+        <div class="event-poster">
+           <img src="../images/datagov_EASST_2026.png" alt="DATAGOV at EASST 2026">
+        </div>
+
+        <div class="event-meta">
+
+            <div class="event-meta-item">
+                <div class="event-meta-label">Date</div>
+                <div class="event-meta-value">8 September 2026</div>
+            </div>
+
+            <div class="event-meta-item">
+                <div class="event-meta-label">Time</div>
+                <div class="event-meta-value">10:00</div>
+            </div>
+
+            <div class="event-meta-item">
+                <div class="event-meta-label">Location</div>
+                <div class="event-meta-value">
+                    Kraków<br>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="event-content">
+
+      <p>
+         <strong>DATAGOV is convening a panel and a linked workshop at EASST 2026 in Kraków (8-11 September), under the conference theme "More-than-now."</strong></p>
+
+<p>
+The panel asks what it means when data infrastructures govern the polity. DATAGOV investigates how digital infrastructures, from biometrics and digital identity to health technologies, govern society by automating how information is produced, circulated, and acted upon, reshaping citizenship, sovereignty, and inequality.
+        </p>
+
+<p>
+The paired workshop complements the discussion through a guided exchange: mapping how different approaches connect within a broader research assemblage on regulatory data infrastructures, and identifying overlaps, complementarities, and opportunities for collaboration.  </p>
+
+<p>
+The contributions cross disciplinary, sectoral, and geographical boundaries, with particular attention to non-Western and comparative perspectives. Topics include assemblage thinking, infrastructural inversion, participatory methods, citizenship and digital agency, data sovereignty and expertise, infrastructures of inequality, biometric and health technologies, and algorithmic governance. </p>
+
+       <p>
+         🗓️ Date: September 8, 2026<br>
+         🕦 Time: 10:00<br>
+         📍Location: EASST 2026 Conference, Kraków, Poland<br>
+         📃 Conference website and registration <a href=" https://easst.net/conferences/easst2026/">here</a>
+       </p>
+   
+
+</main>
+
+<footer>
+    <div class="footer-logos">
+        <img src="../logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="../LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
