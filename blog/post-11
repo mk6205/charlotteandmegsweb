@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DATAGOV goes CPDP: Converging at the Intersection of Data, Rights, and Power | DATAGOV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===============================
+           RESET & BASE
+        ================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1c232;
+            color: #5C4A3E;
+            font-family: 'Oswald', sans-serif;
+            line-height: 1.7;
+            padding-top: 160px;
+            padding-bottom: 120px;
+        }
+
+        /* ===============================
+           SHARED PAGE WIDTH
+        ================================ */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(25px, 4vw, 60px);
+        }
+
+        /* ===============================
+           NAVIGATION
+        ================================ */
+        .site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #5A4635;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px clamp(25px, 4vw, 60px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .main-nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===============================
+           POST LAYOUT
+        ================================ */
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            font-size: 15px;
+            margin-bottom: 35px;
+            opacity: 0.85;
+        }
+
+        .breadcrumb a {
+            color: #5C4A3E;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 6px;
+        }
+
+        /* Blog header */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-header h1 {
+            font-size: clamp(36px, 5vw, 60px);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .blog-header p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Post content */
+        .post-content h2 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .post-content .meta {
+            font-size: 15px;
+            opacity: 0.75;
+            margin-bottom: 30px;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* ===============================
+           IMAGE ROW
+        ================================ */
+        .post-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .post-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+            .post-content p {
+                text-align: left;
+            }
+
+            .post-images {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ===============================
+           IMAGE BLOCK (ALIGNED WITH TEXT)
+        ================================ */
+        .post-content figure {
+            margin: 40px 0;
+        }
+        
+        .post-content img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .post-content figcaption {
+            font-size: 14px;
+            opacity: 0.75;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* ===============================
+           FOOTER
+        ================================ */
+        footer {
+            padding: 120px clamp(25px, 4vw, 60px);
+            border-top: 1px solid rgba(92, 74, 62, 0.1);
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 200px;
+        }
+
+        .logo-erc {
+            width: 140px;
+        }
+
+        .funding-text {
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.45;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="site-header">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="../index.html">DATAGOV</a>
+        </div>
+        <nav class="main-nav">
+            <a href="../blog.html">Blog</a>
+            <a href="../main_events.html">Events</a>
+            <a href="../subscribe.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Page Content -->
+<div class="page-container">
+    <div class="post">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>/</span>
+            <a href="../blog.html">Blog</a>
+            <span>/</span>
+            <span>DATAGOV goes CPDP: Converging at the Intersection of Data, Rights, and Power</span>
+        </nav>
+
+        <!-- Blog header -->
+        <div class="blog-header">
+            <h1>DATAGOV Blog</h1>
+            <p>
+                Here you can find works in progress, exploratory notes, and thoughts on current
+                affairs in data infrastructures.
+            </p>
+        </div>
+
+        <!-- Blog post content -->
+        <div class="post-content">
+            <h2>DATAGOV goes CPDP: Converging at the Intersection of Data, Rights, and Power</h2>
+        <div class="meta">
+            24 June 2026 · Jonas Breuer, Sruthi Vanguri, Giulia Campaioli · #DATAGOV #CPDP #DataPrivacy #DigitalRights #DataInfrastructures #GovernancebyDataInfrastructure
+        </div>
+    <section class="post-content">
+
+    <p>
+        Every year, Brussels hosts CPDP: one of the foremost international conferences at the intersection of technology, law, and society. For a week, academics, regulators, civil society, and industry practitioners share a space to debate the most pressing questions around digital rights and data governance. This year's edition was no exception: rich with controversy, insights, and the kind of hallway conversations that often matter more than the panels themselves.
+
+            
+        <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_jonas.jpg"
+            <figcaption>
+            <i>Jonas Breuer, Postdoctoral Researcher at DATAGOV and Co-Director of the CPDP Conference</i>
+            </figcaption>
+        </figure>
+        </div>
+
+    <p>
+        DATAGOV was there, and not just as a spectator. The team contributed in multiple ways. CPDP is co-directed by DATAGOV's postdoctoral researcher Jonas, who is shaping the conference programme in the direction of facilitating dialogue across disciplines and sectors. His dual role is not a coincidence, as both positions are animated by the same questions about data, power, and what democratic accountability looks like in an infrastructure and platformised society. Stefania Milan, the Principal Investigator, moderated an academic session on data protection, privacy, and AI. Giulia Campaioli, postdoctoral researcher, presented our working paper on infrastructural inequalities. Sruthi Vanguri, PhD student, took part in one of Avatar FM's live broadcasts from the conference. Giulia also participated to a conversation on Avatar FM and Matteo Bard, PhD student at DATAGOV, engaged with session note-taking as well as several networking activities. The rest of the week was what CPDP always is: too many good panels to attend, too many conversations to finish. It is perhaps impossible to represent CPDP in a blog post, what follows is us trying to do justice to a conference that offered more than we could take in.
+    </p>
+
+           
+        <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_Stefania.jpg"
+            <figcaption>
+            <i>Stefania Milan, DATAGOV's PI, moderating the Academic Session II at CPDP</i>
+            </figcaption>
+        </figure>
+        </div>
+        
+        
+    <p>
+        <strong>Infrastructural Inequalities and the Politics of Consent</strong>
+    </p>
+
+    <p>
+        On Friday, Giulia presented our paper Infrastructural Inequalities at Academic Session III, moderated by Frederik Zuiderveen Borgesius. In this theoretical working paper, we introduce the concept of infrastructural inequalities to describe forms of discrimination and exclusion that emerge from the material and institutional arrangements of <a href="https://www.berghahnjournals.com/view/journals/cja/42/1/cja420108.xml">Regulatory Data Infrastructures</a>: data-tracking systems that feed (quasi-)real-time decision-making and population monitoring within the remit of state functions. Using infrastructural inequalities as an analytical tool,  we compare two theory-building case studies: biometric border control systems in Europe and health data infrastructures in India. The discussion that followed was telling. Zuiderveen asked whether the paper could already offer concrete recommendations for policymakers: a question that speaks to the urgency with which the field is looking for actionable frameworks, not just critique. The paper's argument, that Regulatory Data Infrastructures reproduce and stabilize existing structural inequalities by infrastructural choices, beyond algorithmic bias, resonated across the room. Watch the panel <a href="https://youtu.be/mdS3ckh7oag?si=hg872wJhl63-Gqv7">here</a>
+    </p>
+
+               
+        <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_GiuliaCAmpaioli.jpg"
+            <figcaption>
+            <i>Giulia Campaioli, Postdoctoral Researcher at DATAGOV, presenting the working paper on infrastructural inequalities at the CPDP III Academic Session</i>
+            </figcaption>
+        </figure>
+        </div>
+        
+         <p>
+        <strong>Live from CPDP: Two Conversations Worth Your Time</strong>
+    </p>
+
+    <p>
+        CPDP is also a conference that spills beyond its own walls. Avatar FM broadcast live from the event, bringing some of its most important conversations to a wider audience. DATAGOV joined two of them.
+    </p>
+<p>
+        Feminist Futures: Data and Power featured Sruthi alongside Sarah Zadeh and Sophie-Louise Feith. The conversation brought together feminist perspectives on data, power, and digital governance, and what more equitable technological futures might actually look like. Sruthi discussed her research at the intersection of technology and gender, drawing also on her experience in digital policy advocacy (including her work with the Internet Society's Early Career Fellowship and GovStack's Women in GovTech 2026) to ground the conversation in both theory and practice. Listen <a href="https://www.youtube.com/watch?v=pzBbWyePDCc">here</a>.
+    </p>
+
+        
+        <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_Sruthi.jpg"
+            <figcaption>
+            <i>Sruthi Vanguri, PhD Student at DATAGOV, interviewed on Avatar.FM, the CPDP Radio Program alongside Sarah Zadeh and Sophie-Louise Feith</i>
+            </figcaption>
+        </figure>
+        </div>
+
+            
+        <p>
+        Gender-Based Violence Online and Digital Care Networks featured Giulia alongside Tammo de Vries and Luiza Machado. The conversation explored online gender-based violence, its continuum with offline violence, and how civil society responds to systematic technology-facilitated harm. Giulia drew from her upcoming book to present Transfeminist Digital Care as a field of people, knowledge, and practices aimed at building safer and more just digital environments. This framing – which interlaces debates around digital sovereignty and alternative infrastructures with the issue of systemic harm – contributes to grounding the conceptual proposal of the infrastructural inequalities paper. Listen to the full conversation <a href="https://www.youtube.com/live/K2i3gkEloGQ">here</a>.
+    </p>
+
+             <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_giuliavatar.jpg"
+            <figcaption>
+            <i>Giulia Campaioli on Avatar.FM, the CPDP Radio Program, with Luiza Machado, founder of EquiLabs</i>
+            </figcaption>
+        </figure>
+        </div>
+                 
+     <p>
+        <strong>Other Conversations from the Week</strong>
+    </p>
+
+ <p>
+        For Matteo, CPDP left a productive provocation lodged in his thinking: the striking difference between how data is framed in defence contexts versus security ones. In defence, data tends to be treated as a strategic and potentially fragile resource, something to be protected, rationed, leveraged. In security, by contrast, data appears as something that intrudes, accumulates, and infringes. The same object; radically different imaginaries. This is not merely a semantic distinction. It reflects deep divergences in institutional culture, legal frameworks, and assumptions about who data serves and who it threatens. Matteo plans to explore this literature further. His encounter with former Europol colleagues (now based at the University of Luxembourg, working on interoperability from a criminology perspective) suggests fertile ground for cross-disciplinary collaboration.
+    </p>
+
+
+<p>
+        For Sruthi, a memorable insight came from the panel My Chatbot, My Confidant? Protecting User Privacy in Generative AI Conversations. The panel surfaced a striking statistic: 230 million users make health-related queries to ChatGPT every week. That number alone reframes the chatbot as not just a productivity tool but a site of intimate, sometimes desperate, disclosure. Sruthi found herself thinking about governance: what happens when those conversations touch on migration status, reproductive choices, or other matters with serious legal and social consequences? Who has access to those records? Under what circumstances? What does criminalisation look like when it is enabled by a conversation log?
+    </p>
+
+                 <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_datagov.jpg"
+            <figcaption>
+            <i>Matteo, Sruthi, Giulia and Stefania at CPDP</i>
+            </figcaption>
+        </figure>
+        </div>
+
+                     
+             <p>
+        <strong>Why Conferences Like CPDP Still Matter</strong>
+    </p>
+
+<p>
+        There is a recurring temptation (familiar to anyone in academia) to treat conference attendance as a box to tick: a paper presented, a network maintained, a flight taken. CPDP resists that reductiveness. What struck the DATAGOV team, in different ways, was the conference's particular capacity to hold together people who do not normally share a room: regulators and activists, engineers and legal scholars, platform workers and the people who study them. This matters to us: the problems DATAGOV investigates (inequality embedded into infrastructure, data used to discipline and exclude, governance frameworks that lag behind harm) are not problems that any single discipline or sector can address alone. The paper on infrastructural inequalities needs policymakers who ask the right follow-up questions. The analysis of chatbot privacy needs engineers willing to build differently. The feminist critique of data and power needs institutions willing to act. 
+    </p>
+
+                     <p>
+        CPDP is a place where those connections can begin. Not every conversation becomes a collaboration, and not every panel leads to a policy change. But some do, and that possibility (the real if unpredictable capacity of critical, justice-oriented research to find its audience and make its case) is what makes showing up worthwhile. 
+    </p>
+                     
+
+     <div>
+         <div class="post-image-grid">
+            <figure>
+            <img src="/images/CPDP_fish.jpeg"
+            <figcaption>
+            <i>A shot from the artistic exhibition basic.ly at CPDP</i>
+            </figcaption>
+        </figure>
+        </div>
+    
+</section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-logos">
+        <img src="../logo-UvA.svg" alt="University of Amsterdam Logo" class="logo">
+        <img src="../LOGO_ERC-FLAG_EU-no text.png" alt="ERC Logo" class="logo-erc">
+        <div class="funding-text">
+            Funded by the European Union. Views and opinions expressed are however those
+            of the author(s) only and do not necessarily reflect those of the European
+            Union or the ERC Executive Agency.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
